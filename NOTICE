@@ -1,167 +1,6 @@
-Resilient Immutable Archive Pagination System (RIAPS)
+RESILIENT IMMUTABLE ARCHIVE PAGINATION SYSTEM (RIAPS)
+
 Copyright © 2026 TISAO Technologies LLC
-
-Original Author and System Designer:
-Saheed Oluwatosin Tiamiyu
-
-Organization:
-TISAO Technologies LLC
-
-Project:
-Resilient Immutable Archive Pagination System (RIAPS)
-
-Website:
-https://tisaotechnologies.com
-
-LinkedIn:
-https://www.linkedin.com/in/tiamiyu-saheed-oluwatosin/
-
-GitHub:
-https://github.com/official-tisao
-
-======================================================================
-PROJECT ATTRIBUTION
-======================================================================
-
-The Resilient Immutable Archive Pagination System (RIAPS) is an
-architectural strategy for constructing append-only, stable archive
-pagination using immutable post-ID boundaries.
-
-RIAPS is designed to minimize cascading archive invalidation caused by
-content publication and deletion in conventional newest-first pagination
-systems, while enabling stable historical archive URLs, localized cache
-invalidation, efficient database retrieval, and long-lived edge caching.
-
-The original system architecture, technical documentation, architectural
-descriptions, diagrams, examples, terminology, and reference
-implementations contained in this repository were authored and/or
-developed by Saheed Oluwatosin Tiamiyu through TISAO Technologies LLC.
-
-TISAO Technologies LLC is the copyright holder for the original materials
-identified as copyrighted by the company in this repository.
-
-======================================================================
-LICENSING
-======================================================================
-
-This repository uses separate licenses for software and documentation.
-
-SOFTWARE AND REFERENCE IMPLEMENTATIONS
---------------------------------------
-
-Unless a particular file or directory explicitly states otherwise, source
-code, reference implementations, software examples, libraries, utilities,
-tests, and other software components contained in this repository are
-licensed under the:
-
-    Apache License, Version 2.0
-
-The applicable license terms are provided in the repository's LICENSE file.
-
-Software licensed under the Apache License, Version 2.0 may be used,
-modified, and distributed, including for commercial purposes, subject to
-the terms and conditions of that license.
-
-DOCUMENTATION AND ARCHITECTURAL MATERIALS
------------------------------------------
-
-Unless a particular file explicitly states otherwise, original
-documentation and other copyrightable non-software materials in this
-repository, including:
-
-    README.md
-    TECHNICAL.md
-    architectural documentation
-    explanatory diagrams
-    written technical descriptions
-    documentation examples
-    other original documentation materials
-
-are licensed under the:
-
-    Creative Commons Attribution 4.0 International License
-    (CC BY 4.0)
-
-A copy of, or reference to, the applicable CC BY 4.0 license should be
-provided in LICENSE-DOCS.
-
-CC BY 4.0 permits sharing and adaptation of the covered materials,
-including for commercial purposes, subject to its attribution and other
-applicable requirements.
-
-Where attribution is required under the applicable documentation license,
-the original work should be attributed to:
-
-    Saheed Oluwatosin Tiamiyu
-    TISAO Technologies LLC
-    Immutable Archive Pagination
-
-Project:
-https://github.com/official-tisao
-
-Company:
-https://tisaotechnologies.com
-
-======================================================================
-SCOPE OF LICENSES
-======================================================================
-
-The licenses identified above apply to the copyrightable materials and
-software distributed in this repository according to their respective
-license scopes.
-
-References in this NOTICE to the Immutable Archive Pagination architecture,
-strategy, method, or algorithm are intended to identify and describe the
-subject matter of this project.
-
-Nothing in this NOTICE should be interpreted as modifying, expanding, or
-restricting the rights and obligations established by the Apache License,
-Version 2.0 or the Creative Commons Attribution 4.0 International License.
-
-If an individual file contains a different or more specific license notice,
-the notice applicable to that file controls to the extent stated therein.
-
-======================================================================
-THIRD-PARTY MATERIALS
-======================================================================
-
-Third-party software, documentation, libraries, trademarks, or other
-materials incorporated into or referenced by this project remain subject
-to their respective licenses and ownership rights.
-
-Nothing in this NOTICE grants rights to third-party materials beyond those
-provided by their respective owners or licenses.
-
-======================================================================
-IMPLEMENTATION, INTEGRATION, AND COMMERCIAL SUPPORT
-======================================================================
-
-Organizations interested in implementing Immutable Archive Pagination in
-production systems may contact TISAO Technologies LLC for professional
-services, including:
-
-    architecture and implementation guidance
-    publishing-platform integration
-    database and indexing optimization
-    CDN and edge-cache architecture
-    static-generation strategy
-    scalability and performance engineering
-    custom implementation
-    enterprise integration and support
-
-Contact:
-
-    TISAO Technologies LLC
-    https://tisaotechnologies.com
-    info[at]tisaotechnologies[dot]com
-
-Commercial use permitted under the applicable licenses does not require
-purchasing services from, obtaining commercial support from, or entering
-into a separate agreement with TISAO Technologies LLC.
-
-======================================================================
-AUTHORSHIP AND COPYRIGHT
-======================================================================
 
 Original Author and System Designer:
 Saheed Oluwatosin Tiamiyu
@@ -169,20 +8,480 @@ Saheed Oluwatosin Tiamiyu
 Copyright Holder:
 TISAO Technologies LLC
 
+Organization:
+TISAO Technologies LLC
+
+Project:
+Resilient Immutable Archive Pagination System (RIAPS)
+
+Company Website:
+https://tisaotechnologies.com
+
+Author LinkedIn:
+https://www.linkedin.com/in/tiamiyu-saheed-oluwatosin/
+
+Author GitHub:
+https://github.com/official-tisao
+
+
+======================================================================
+1. PROJECT IDENTIFICATION
+======================================================================
+
+The Resilient Immutable Archive Pagination System (RIAPS) is an
+architectural strategy and system design for constructing stable,
+append-only archive pagination using immutable post-ID boundaries.
+
+RIAPS is designed to address cascading archive invalidation associated
+with conventional newest-first pagination systems.
+
+In conventional pagination, the publication of a new item may shift
+existing items between pagination pages, potentially changing a large
+number of historical archive URLs even though only one new item was
+created.
+
+RIAPS instead constructs archive pages chronologically, appends qualifying
+content to the currently active highest-numbered archive page, and seals
+completed archive pages using persistent post-ID boundaries.
+
+A central design principle of RIAPS is:
+
+    Once an archive page is sealed, future publications or deletions
+    should not cause unrelated content to cross that sealed page
+    boundary.
+
+The system is intended to enable, among other things:
+
+    - stable historical archive pages;
+    - localized cache invalidation;
+    - reduced cascading pagination changes;
+    - long-lived CDN and edge caching;
+    - reduced SSR workload;
+    - efficient indexed archive retrieval;
+    - avoidance of large OFFSET-based pagination queries;
+    - compact archive-boundary metadata;
+    - scalable archival behavior for high-volume publishing systems.
+
+
+======================================================================
+2. AUTHORSHIP AND COPYRIGHT
+======================================================================
+
+Original Author and System Designer:
+
+    Saheed Oluwatosin Tiamiyu
+
+Organization:
+
+    TISAO Technologies LLC
+
+Copyright Holder:
+
+    TISAO Technologies LLC
+
 Copyright © 2026 TISAO Technologies LLC
 
-This distinction recognizes Saheed Oluwatosin Tiamiyu as the original
-author and system designer of the materials documented in this repository,
-while TISAO Technologies LLC is identified as the copyright holder for
-the applicable original materials.
+
+Saheed Oluwatosin Tiamiyu is identified by this project as the original
+author and system designer of the original RIAPS materials published in
+this repository.
+
+TISAO Technologies LLC is identified as the copyright holder for the
+applicable original copyrightable materials published by the company in
+this repository.
+
+Authorship and copyright ownership are separate concepts.
+
+Identification of TISAO Technologies LLC as copyright holder therefore
+does not replace the identification of Saheed Oluwatosin Tiamiyu as the
+original author and system designer of the applicable original materials.
+
 
 ======================================================================
-NOTICE
+3. ORIGINAL PROJECT MATERIALS
 ======================================================================
 
-This NOTICE file is provided for attribution, licensing clarification, and
-informational purposes in connection with the applicable licenses.
+Subject to any file-specific notice, the original project materials may
+include:
 
-It does not replace or modify the terms of the Apache License, Version 2.0,
-the Creative Commons Attribution 4.0 International License, or any other
-license that may apply to specific files or third-party materials.
+    - technical documentation;
+    - architectural descriptions;
+    - original explanatory text;
+    - diagrams and illustrations;
+    - database design examples;
+    - pseudocode;
+    - examples;
+    - reference implementations;
+    - software source code;
+    - tests;
+    - benchmarks;
+    - implementation demonstrations;
+    - other materials created specifically for the RIAPS project.
+
+The applicable license depends on whether the material is software or
+documentation/non-software material, as described below.
+
+
+======================================================================
+4. DUAL-LICENSE STRUCTURE
+======================================================================
+
+This repository intentionally uses separate licenses for software and
+documentation.
+
+The licensing structure is:
+
+    SOFTWARE / REFERENCE IMPLEMENTATIONS
+        Apache License, Version 2.0
+
+    DOCUMENTATION / ARCHITECTURAL MATERIALS
+        Creative Commons Attribution 4.0 International
+        (CC BY 4.0)
+
+These licenses apply only to materials within their respective scopes.
+
+Neither license should be interpreted as automatically applying to
+materials expressly identified as being governed by another license.
+
+
+======================================================================
+5. SOFTWARE AND REFERENCE IMPLEMENTATIONS
+======================================================================
+
+Unless a particular file or directory explicitly states otherwise,
+software components distributed as part of this repository are licensed
+under the:
+
+    Apache License, Version 2.0
+
+Software components may include:
+
+    - source code;
+    - reference implementations;
+    - libraries;
+    - utilities;
+    - executable software;
+    - test code;
+    - software examples;
+    - framework integrations;
+    - implementation tooling;
+    - benchmark software.
+
+The complete Apache License, Version 2.0 applicable to those materials
+is provided in:
+
+    LICENSE
+
+The Apache License, Version 2.0 permits use, reproduction, modification,
+and distribution, including commercial use, subject to the terms and
+conditions of that license.
+
+Nothing in this NOTICE modifies, supplements, restricts, or replaces the
+rights and obligations established by the Apache License, Version 2.0.
+
+
+======================================================================
+6. DOCUMENTATION AND ARCHITECTURAL MATERIALS
+======================================================================
+
+Unless a particular file explicitly states otherwise, original
+copyrightable documentation and non-software materials created for this
+project are licensed under the:
+
+    Creative Commons Attribution 4.0 International License
+    (CC BY 4.0)
+
+Such materials may include:
+
+    - README.md;
+    - TECHNICAL.md;
+    - architectural documentation;
+    - written system-design explanations;
+    - original diagrams;
+    - original illustrations;
+    - explanatory examples;
+    - documentation contained in the docs/ directory;
+    - other original non-software technical materials.
+
+The documentation license is identified separately in:
+
+    LICENSE-DOCS
+
+CC BY 4.0 generally permits sharing and adaptation of covered materials,
+including commercial use, subject to the conditions of that license,
+including its attribution requirements.
+
+Nothing in this NOTICE modifies, supplements, restricts, or replaces the
+rights and obligations established by CC BY 4.0.
+
+
+======================================================================
+7. ATTRIBUTION FOR DOCUMENTATION
+======================================================================
+
+Where attribution is required by the applicable Creative Commons license,
+the following attribution is recommended:
+
+    Resilient Immutable Archive Pagination System (RIAPS)
+
+    Original Author and System Designer:
+    Saheed Oluwatosin Tiamiyu
+
+    Copyright Holder:
+    TISAO Technologies LLC
+
+    Website:
+    https://tisaotechnologies.com
+
+Where technically reasonable, attribution may also reference the original
+RIAPS repository.
+
+The exact repository URL should be added here after the public repository
+has been created.
+
+Suggested citation:
+
+    Tiamiyu, Saheed Oluwatosin.
+    "Resilient Immutable Archive Pagination System (RIAPS)."
+    TISAO Technologies LLC, 2026.
+
+
+======================================================================
+8. SCOPE OF THE LICENSES
+======================================================================
+
+The Apache License, Version 2.0 and Creative Commons Attribution 4.0
+International License apply to copyrightable materials distributed under
+their respective terms.
+
+References in this repository to the RIAPS:
+
+    - architecture;
+    - strategy;
+    - system;
+    - algorithm;
+    - methodology;
+    - technique;
+    - design;
+    - concept;
+
+are used to describe the technical subject matter documented by the
+project.
+
+Nothing in this NOTICE should be interpreted as asserting that copyright
+law, by itself, grants exclusive rights over an abstract idea, algorithm,
+method, mathematical concept, or system concept independent of the
+copyrightable expression or software in which it may be embodied.
+
+Similarly, nothing in this NOTICE should be interpreted as granting,
+denying, or determining rights that may exist independently under patent,
+trademark, contract, trade-secret, or other applicable law.
+
+This NOTICE is intended to identify the project, document authorship,
+identify copyright ownership, explain the repository's licensing
+structure, and provide attribution information.
+
+
+======================================================================
+9. SEALED-PAGE DESIGN PRINCIPLE
+======================================================================
+
+For project identification purposes, the RIAPS architecture documented in
+this repository is centered on the following principle:
+
+    Historical pagination should behave as an append-only archive rather
+    than a continuously rebalanced window over newly published content.
+
+A RIAPS implementation may use immutable, monotonically increasing post
+identifiers and persistent page boundaries represented conceptually by:
+
+    archive identity
+    page number
+    start post ID
+    end post ID
+
+A completed archive page can then be reconstructed from its stable ID
+range together with the applicable archive predicate.
+
+The detailed technical specification is provided in the project's
+technical documentation.
+
+
+======================================================================
+10. MODIFICATIONS AND DERIVATIVE MATERIALS
+======================================================================
+
+Recipients who modify covered materials should follow the modification,
+notice, and attribution requirements of the license applicable to those
+materials.
+
+For documentation licensed under CC BY 4.0, users should indicate when
+changes have been made as required by that license.
+
+For software licensed under Apache License 2.0, redistribution and
+modification are governed by the requirements of the Apache License,
+including applicable copyright, license, NOTICE, and modification-notice
+requirements.
+
+Nothing in this section creates requirements beyond those contained in
+the applicable license.
+
+
+======================================================================
+11. THIRD-PARTY MATERIALS
+======================================================================
+
+This repository may reference or incorporate third-party:
+
+    - software;
+    - libraries;
+    - frameworks;
+    - documentation;
+    - specifications;
+    - trademarks;
+    - examples;
+    - other materials.
+
+Such third-party materials remain subject to their respective licenses,
+terms, notices, and ownership rights.
+
+The RIAPS project licenses do not replace or override third-party license
+requirements.
+
+Nothing in this NOTICE grants rights to third-party trademarks, software,
+documentation, or other intellectual property beyond the rights granted
+by their respective owners.
+
+
+======================================================================
+12. IMPLEMENTATION, INTEGRATION, AND COMMERCIAL SUPPORT
+======================================================================
+
+The RIAPS project is publicly documented to support technical study,
+experimentation, implementation, and real-world use subject to the
+applicable licenses.
+
+Organizations interested in implementing the Resilient Immutable Archive
+Pagination System in production environments may contact TISAO
+Technologies LLC for professional services.
+
+Services may include:
+
+    - RIAPS architecture consultation;
+    - production implementation guidance;
+    - custom RIAPS implementations;
+    - publishing-platform integration;
+    - CMS integration;
+    - database architecture;
+    - database indexing optimization;
+    - high-volume archive design;
+    - CDN architecture;
+    - edge-cache optimization;
+    - static-generation architecture;
+    - search-engine crawl optimization;
+    - cache-invalidation strategy;
+    - scalability engineering;
+    - performance testing;
+    - migration from conventional pagination;
+    - enterprise integration;
+    - technical support.
+
+Contact:
+
+    TISAO Technologies LLC
+
+    Website:
+    https://tisaotechnologies.com
+
+    Email:
+    info[at]tisaotechnologies[dot]com
+
+
+Commercial use permitted by an applicable open-source or documentation
+license does not require purchasing professional services from TISAO
+Technologies LLC.
+
+Commercial users are not required to obtain a separate commercial
+license merely because they choose not to purchase consulting,
+implementation, integration, or support services, unless their particular
+use is otherwise outside the scope of the applicable license.
+
+Professional services offered by TISAO Technologies LLC are separate
+from the permissions granted under the applicable licenses.
+
+
+======================================================================
+13. PROJECT AND AUTHOR INFORMATION
+======================================================================
+
+Project:
+
+    Resilient Immutable Archive Pagination System (RIAPS)
+
+Original Author and System Designer:
+
+    Saheed Oluwatosin Tiamiyu
+
+Organization:
+
+    TISAO Technologies LLC
+
+Copyright Holder:
+
+    TISAO Technologies LLC
+
+Copyright:
+
+    Copyright © 2026 TISAO Technologies LLC
+
+Company Website:
+
+    https://tisaotechnologies.com
+
+LinkedIn:
+
+    https://www.linkedin.com/in/tiamiyu-saheed-oluwatosin/
+
+GitHub:
+
+    https://github.com/official-tisao
+
+Implementation / Integration / Commercial Support:
+
+    info[at]tisaotechnologies[dot]com
+
+
+======================================================================
+14. NOTICE PURPOSE
+======================================================================
+
+This NOTICE file is provided for:
+
+    - project identification;
+    - authorship attribution;
+    - copyright identification;
+    - licensing clarification;
+    - documentation of the software/documentation licensing split;
+    - attribution guidance;
+    - third-party licensing clarification;
+    - implementation and support contact information.
+
+This NOTICE does not replace or modify the terms of:
+
+    Apache License, Version 2.0
+
+or:
+
+    Creative Commons Attribution 4.0 International License
+    (CC BY 4.0)
+
+or any other license expressly applicable to a particular file or
+third-party component.
+
+If there is a conflict between this NOTICE and an applicable license, the
+terms of the applicable license control.
+
+
+======================================================================
+END OF NOTICE
+======================================================================
