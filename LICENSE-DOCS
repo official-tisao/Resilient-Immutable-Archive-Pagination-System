@@ -1,0 +1,61 @@
+RESILIENT IMMUTABLE ARCHIVE PAGINATION SYSTEM (RIAPS)
+DOCUMENTATION LICENSE
+
+Copyright © 2026 TISAO Technologies LLC
+
+Original Author and System Designer:
+Saheed Oluwatosin Tiamiyu
+
+Unless otherwise expressly stated, the original copyrightable
+documentation and non-software materials in this repository are licensed
+under the:
+
+Creative Commons Attribution 4.0 International License
+(CC BY 4.0)
+
+This includes, where applicable:
+
+    README.md
+    TECHNICAL.md
+    original architectural documentation
+    original diagrams and illustrations
+    original written technical explanations
+    documentation contained in docs/
+    other original non-software documentation materials
+
+Under CC BY 4.0, covered materials may be shared and adapted, including
+for commercial purposes, subject to the terms and conditions of the
+license.
+
+Where attribution is required, the following attribution is recommended:
+
+    Resilient Immutable Archive Pagination System (RIAPS)
+    Original Author and System Designer: Saheed Oluwatosin Tiamiyu
+    Copyright Holder: TISAO Technologies LLC
+    https://tisaotechnologies.com
+
+Suggested academic/technical citation:
+
+    Tiamiyu, Saheed Oluwatosin.
+    "Resilient Immutable Archive Pagination System (RIAPS)."
+    TISAO Technologies LLC, 2026.
+
+The official Creative Commons Attribution 4.0 International license is
+available at:
+
+    https://creativecommons.org/licenses/by/4.0/
+
+The legal code is available at:
+
+    https://creativecommons.org/licenses/by/4.0/legalcode
+
+Nothing in this file modifies the terms of CC BY 4.0.
+
+Software and reference implementations in this repository are separately
+licensed under the Apache License, Version 2.0, unless expressly stated
+otherwise.
+
+See:
+
+    LICENSE
+    NOTICE
