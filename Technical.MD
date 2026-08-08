@@ -1853,3 +1853,9 @@ This document describes an architectural strategy and algorithmic design.
 
 Reference implementations, benchmarks, framework-specific integrations, and experimental comparisons with traditional pagination may be added to this repository as the project evolves.
 
+---
+
+## License
+
+See [LICENSE](./LICENSE) and [NOTICE](./NOTICE) for licensing and attribution requirements.
+
